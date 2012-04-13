@@ -1,2 +1,4 @@
 plump-multiplier: 1.0
 blaze-multiplier: 1.0
+player-override: false
+player-multiplier: 0.5

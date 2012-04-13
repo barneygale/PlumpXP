@@ -34,7 +34,7 @@ public class PlumpXP extends JavaPlugin {
 			log.info("PlumpXP has been disabled.");
 		}
 		public boolean onCommand(CommandSender sender, Command command, String name, String[] args) {
-	        if (command.getName().equalsIgnoreCase("reloadplumpxp") && sender.isOp()) {
+	        if (command.getName().equalsIgnoreCase("reloadplumpxp")) {
 	            config.load();
 	            return true;
 	        }
