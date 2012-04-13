@@ -14,11 +14,12 @@ public class PlumpXPListener implements Listener {
 	public void onEntityDeath(EntityDeathEvent event) {
 		EntityType etype = event.getEntityType();
 		if(etype != EntityType.PLAYER) {
-			int xp = event.getDroppedExp();
+			double xp = (double)event.getDroppedExp();
 			if(etype == EntityType.BLAZE) {
 				xp*=plugin.config.BLAZE_MULTIPLIER;
 			}
-			event.setDroppedExp((int)(xp*plugin.config.PLUMP_MULTIPLIER));
+			xp*=plugin.config.PLUMP_MULTIPLIER;
+			event.setDroppedExp((int)xp);
 		}
 	}
 }
