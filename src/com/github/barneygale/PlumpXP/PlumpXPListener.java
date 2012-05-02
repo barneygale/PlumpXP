@@ -16,6 +16,7 @@ public class PlumpXPListener implements Listener {
     public PlumpXPListener(PlumpXP instance) {
         plugin = instance;
     }
+
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
          Entity target = event.getEntity();
@@ -26,17 +27,17 @@ public class PlumpXPListener implements Listener {
                 handlePlayerDeath((PlayerDeathEvent) event,attacker, xp);
                 return;
          }
-    
+
          //not killed by player
          if(attacker == null) {
                 return;
             }
-             handleMonsterDeath(event, attacker, xp);
+         handleMonsterDeath(event, xp);
         }
-    
-    private void handleMonsterDeath(EntityDeathEvent event, Player attacker, int exp) {
+
+    private void handleMonsterDeath(EntityDeathEvent event, int exp) {
         EntityType target = event.getEntityType();
-                
+
         if (target == EntityType.BLAZE) {
             exp *= plugin.config.BLAZE_MULTIPLIER;
         }
@@ -45,34 +46,32 @@ public class PlumpXPListener implements Listener {
         }
         event.setDroppedExp(exp);
     }
-    
+
     private void handlePlayerDeath(PlayerDeathEvent event,Player attacker, int exp) {
-        Player target = (Player)event.getEntity();    
-        Player killer = getAttacker(target.getLastDamageCause());
         //killed by another player
-        if (killer != null) {
+        if (attacker != null) {
             exp *= plugin.config.PLAYER_MULTIPLIER;
         }
         event.setDroppedExp(exp);
     }
-    
+
     private Player getAttacker(EntityDamageEvent attacker) {
         if((attacker == null) || (!(attacker instanceof EntityDamageByEntityEvent))){
             return null;
         }
-   
+
         Player p = null;
         Entity damager = ((EntityDamageByEntityEvent) attacker).getDamager();
-
+        
         if(damager instanceof Arrow) {
             Arrow damage_arrow = (Arrow) damager;
             if(damage_arrow.getShooter() instanceof Player) {
                 p = (Player) damage_arrow.getShooter();
             }
-        } else if(damager instanceof Player) {
+        } 
+        else if(damager instanceof Player) {
             p = (Player)damager;
         }
         return p;
     }
-    
 }
