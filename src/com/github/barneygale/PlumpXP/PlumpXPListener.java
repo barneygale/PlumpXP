@@ -1,9 +1,9 @@
 package com.github.barneygale.PlumpXP;
 
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -49,7 +49,7 @@ public class PlumpXPListener implements Listener {
 
     private void handlePlayerDeath(PlayerDeathEvent event,Player attacker, int exp) {
         //killed by another player
-        if (attacker != null) {
+        if ((attacker != null) && (plugin.config.PLAYER_OVERRIDE)) {
             exp *= plugin.config.PLAYER_MULTIPLIER;
         }
         event.setDroppedExp(exp);
@@ -62,11 +62,11 @@ public class PlumpXPListener implements Listener {
 
         Player p = null;
         Entity damager = ((EntityDamageByEntityEvent) attacker).getDamager();
-        
-        if(damager instanceof Arrow) {
-            Arrow damage_arrow = (Arrow) damager;
-            if(damage_arrow.getShooter() instanceof Player) {
-                p = (Player) damage_arrow.getShooter();
+
+        if(damager instanceof Projectile) {
+            Projectile projectile = (Projectile) damager;
+            if(projectile.getShooter() instanceof Player) {
+                p = (Player) projectile.getShooter();
             }
         } 
         else if(damager instanceof Player) {
