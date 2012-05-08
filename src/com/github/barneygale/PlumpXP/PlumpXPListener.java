@@ -37,12 +37,14 @@ public class PlumpXPListener implements Listener {
 
     private void handleMonsterDeath(EntityDeathEvent event, int exp) {
         EntityType target = event.getEntityType();
-
-        if (target == EntityType.BLAZE) {
+        int temp = exp;
+        if ((target == EntityType.BLAZE) && (plugin.config.BLAZE_MULTIPLIER > 0)) {
             exp *= plugin.config.BLAZE_MULTIPLIER;
         }
         else {
-            exp *= plugin.config.PLUMP_MULTIPLIER;
+            if (plugin.config.PLUMP_MULTIPLIER > 0) {
+            	exp *= plugin.config.PLUMP_MULTIPLIER;
+            }
         }
         event.setDroppedExp(exp);
     }
